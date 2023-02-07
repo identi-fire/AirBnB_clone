@@ -1,6 +1,10 @@
+#!/usr/bin/python3
+
 """
 BaseModel class
 """
+
+
 import uuid
 from datetime import datetime, date, time
 
@@ -15,15 +19,15 @@ class BaseModel:
         """
         if len(kwargs) != 0:
             self.id = str(uuid.uuid4())
-	    self.created_at = datetime.now()
+            self.created_at = datetime.now()
             self.name = type(self).__name__
 
 	    #modify kwargs
             kwargs.pop('__class__')
             update = kwargs['updated_at']
-	    created = kwargs['created_at']
+            created = kwargs['created_at']
 	    kwargs['updated_at'] = datetime.strptime(update, '%Y-%m-%dT%H:%M:%S.%f')
-	    kwargs['created_at'] = datetime.strptime(created, '%Y-%m-%dT%H:%M:%S.%f')
+            kwargs['created_at'] = datetime.strptime(created, '%Y-%m-%dT%H:%M:%S.%f')
 
             #update current __dict__ with kwargs
             self.__dict__.update(kwargs)
