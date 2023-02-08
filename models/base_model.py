@@ -13,6 +13,7 @@ class BaseModel:
     """
     A class that defines all common attributes/methods for other classes
     """
+
     def __init__(self, *args, **kwargs):
         """
         initializes the class
@@ -22,14 +23,16 @@ class BaseModel:
             self.created_at = datetime.now()
             self.name = type(self).__name__
 
-	    #modify kwargs
+            # modify kwargs
             kwargs.pop('__class__')
             update = kwargs['updated_at']
             created = kwargs['created_at']
-	    kwargs['updated_at'] = datetime.strptime(update, '%Y-%m-%dT%H:%M:%S.%f')
-            kwargs['created_at'] = datetime.strptime(created, '%Y-%m-%dT%H:%M:%S.%f')
+            kwargs['updated_at'] = datetime.strptime(
+                update, '%Y-%m-%dT%H:%M:%S.%f')
+            kwargs['created_at'] = datetime.strptime(
+                created, '%Y-%m-%dT%H:%M:%S.%f')
 
-            #update current __dict__ with kwargs
+            # update current __dict__ with kwargs
             self.__dict__.update(kwargs)
         else:
             self.id = str(uuid.uuid4())
@@ -56,7 +59,9 @@ class BaseModel:
         modified = {}
         modified.update(data)
         modified['__class__'] = type(self).__name__
-        modified['updated_at'] = self.updated_at.strftime('%Y-%m-%dT%H:%M:%S.%f')
-        modified['created_at'] = self.created_at.strftime('%Y-%m-%dT%H:%M:%S.%f')
+        modified['updated_at'] = self.updated_at.strftime(
+            '%Y-%m-%dT%H:%M:%S.%f')
+        modified['created_at'] = self.created_at.strftime(
+            '%Y-%m-%dT%H:%M:%S.%f')
 
         return modified
