@@ -8,6 +8,7 @@ BaseModel class
 import uuid
 from datetime import datetime, date, time
 from models import storage
+from models.engine.file_storage import FileStorage
 
 
 class BaseModel:
@@ -28,17 +29,15 @@ class BaseModel:
             kwargs.pop('__class__')
             update = kwargs['updated_at']
             created = kwargs['created_at']
-            kwargs['updated_at'] = datetime.strptime(
-                update, '%Y-%m-%dT%H:%M:%S.%f')
-            kwargs['created_at'] = datetime.strptime(
-                created, '%Y-%m-%dT%H:%M:%S.%f')
+            kwargs['updated_at'] = update.isoformat()
+            kwargs['created_at'] = created.isoformat()
 
             # update current __dict__ with kwargs
             self.__dict__.update(kwargs)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
-            storage.new()
+            storage.new(self)
 
     def __str__(self):
         """
@@ -51,20 +50,16 @@ class BaseModel:
         """
         updates instance attribute saved at with the current datetime
         """
-        self.updated_at = str(datetime.now())
+        self.updated_at = datetime.now()
         storage.save()
 
     def to_dict(self):
         """
         returns a dictionary containing instance data
         """
-        self.save()
-        modified = {}
-        modified.update(data)
-        modified['__class__'] = type(self).__name__
-        modified['updated_at'] = self.updated_at.strftime(
-            '%Y-%m-%dT%H:%M:%S.%f')
-        modified['created_at'] = self.created_at.strftime(
-            '%Y-%m-%dT%H:%M:%S.%f')
+        my_dict = dict(self.__dict__)
+        my_dict["__class__"] = str(type(self).__name__)
+        my_dict['updated_at'] = self.updated_at.isoformat()
+        my_dict['created_at'] = self.created_at.isoformat()
 
-        return modified
+        return my_dict
