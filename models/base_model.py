@@ -21,8 +21,9 @@ class BaseModel:
 
             # modify kwargs
             kwargs.pop('__class__')
-            updated = datetime.strptime(kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
-            created = datetime.strptime(kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
+            dt_f = '%Y-%m-%dT%H:%M:%S.%f'
+            updated = datetime.strptime(kwargs['updated_at'], dt_f)
+            created = datetime.strptime(kwargs['created_at'], dt_f)
             kwargs['updated_at'] = updated
             kwargs['created_at'] = created
 
