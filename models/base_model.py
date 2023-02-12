@@ -2,7 +2,7 @@
 """BaseModel class for AirBnB clone"""
 import uuid
 from datetime import datetime, date, time
-import models
+from models import storage
 
 
 class BaseModel:
