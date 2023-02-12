@@ -1,14 +1,8 @@
 #!/usr/bin/python3
-
-"""
-BaseModel class
-"""
-
-
+"""BaseModel class for AirBnB clone"""
 import uuid
 from datetime import datetime, date, time
-from models import storage
-from models.engine.file_storage import FileStorage
+import models
 
 
 class BaseModel:
