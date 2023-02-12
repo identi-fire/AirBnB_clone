@@ -21,10 +21,10 @@ class BaseModel:
 
             # modify kwargs
             kwargs.pop('__class__')
-            update = kwargs['updated_at']
-            created = kwargs['created_at']
-            kwargs['updated_at'] = update.isoformat()
-            kwargs['created_at'] = created.isoformat()
+            updated = datetime.strptime(kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
+            created = datetime.strptime(kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
+            kwargs['updated_at'] = updated
+            kwargs['created_at'] = created
 
             # update current __dict__ with kwargs
             self.__dict__.update(kwargs)
