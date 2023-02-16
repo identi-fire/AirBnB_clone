@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 """
 File storage class
 """
@@ -20,13 +18,14 @@ class FileStorage:
         """
         returns the dictionary __objects
         """
-        return FileStorage.__objects
+        return self.__objects
 
     def new(self, obj):
         """
         sets in __objects the obj with key <obj class name>.id
         """
         if obj is not None:
+            # check content of obj
             key = obj.__class__.__name__ + "." + obj.id
             FileStorage.__objects[key] = obj
 
@@ -34,13 +33,12 @@ class FileStorage:
         """
         serialize __objects to JSON file path
         """
-        # modify self.__objects
+        # modify __objects
         json_objects = {}
         with open(FileStorage.__file_path, mode="w+", encoding="utf-8") as f:
             for key, value in FileStorage.__objects.items():
                 json_objects[key] = value.to_dict()
             json.dump(json_objects, f)
-
 
     def reload(self):
         """
@@ -48,9 +46,11 @@ class FileStorage:
         """
         try:
             with open(FileStorage.__file_path, 'r') as f:
-                dict = json.loads(f.read())
-                for value in dict.values():
-                    cls = value["__class__"]
-                    self.new(eval(cls)(**value))
-        except:
+                json_data = json.load(f)
+
+                for value in json_data.values():
+                    className = value["__class__"]
+                    self.new(eval(className)(**value))
+            FileStorage.__objects = json_data
+        except (NameError, FileNotFoundError):
             pass

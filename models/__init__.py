@@ -1,12 +1,9 @@
-#!/usr/bin/python3
-
 """
 creates a unique file storaage instance
 """
 
+from models.engine import file_storage
 
-import engine.file_storage
 
-
-storage = FileStorage()
+storage = file_storage.FileStorage()
 storage.reload()
