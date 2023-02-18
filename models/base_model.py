@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-"""
-BaseModel class
-"""
-
-
-=======
 #!/usr/bin/python3
 """BaseModel class for AirBnB clone"""
->>>>>>> cd9d38ee7216e648933f0eda01a10010b3bfcb06
 import uuid
 from datetime import datetime, date, time
 from models import storage
