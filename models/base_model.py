@@ -1,12 +1,16 @@
+<<<<<<< HEAD
 """
 BaseModel class
 """
 
 
+=======
+#!/usr/bin/python3
+"""BaseModel class for AirBnB clone"""
+>>>>>>> cd9d38ee7216e648933f0eda01a10010b3bfcb06
 import uuid
 from datetime import datetime, date, time
 from models import storage
-from models.engine.file_storage import FileStorage
 
 
 class BaseModel:
@@ -25,10 +29,11 @@ class BaseModel:
 
             # modify kwargs
             kwargs.pop('__class__')
-            update = kwargs['updated_at']
-            created = kwargs['created_at']
-            kwargs['updated_at'] = update.isoformat()
-            kwargs['created_at'] = created.isoformat()
+            dt_f = '%Y-%m-%dT%H:%M:%S.%f'
+            updated = datetime.strptime(kwargs['updated_at'], dt_f)
+            created = datetime.strptime(kwargs['created_at'], dt_f)
+            kwargs['updated_at'] = updated
+            kwargs['created_at'] = created
 
             # update current __dict__ with kwargs
             self.__dict__.update(kwargs)
