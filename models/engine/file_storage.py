@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 #!/usr/bin/python3
->>>>>>> cd9d38ee7216e648933f0eda01a10010b3bfcb06
 """
 File storage class
 """
